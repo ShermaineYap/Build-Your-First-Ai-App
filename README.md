@@ -8,7 +8,7 @@ ScamSparring is a safe practice chat for Malaysian university students. An AI pl
 
 ## Try it
 
-- **Live demo:** _link added after deployment_
+- **Live demo:** https://scam-sparring.vercel.app
 - **No quota needed:** on the home page, pick one of the three **recorded chats** to watch a real AI session and its marking.
 
 ## Features
