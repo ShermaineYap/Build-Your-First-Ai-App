@@ -1,0 +1,306 @@
+[
+ {
+  "id": "like-share-campur",
+  "scenarioId": "like_share",
+  "language": "campur",
+  "label": "Like-and-share job, in Campur: gets paid RM15, walks away at the top-up",
+  "history": [
+   {
+    "from": "scammer",
+    "text": "Hi! 🙋‍♀️ Ada part‑time kerja dari rumah, cuma like & share post je, boleh dapat RM50‑RM300 sehari, tak perlu experience, start today la. Interested?"
+   },
+   {
+    "from": "student",
+    "text": "hi, how u get my number? what kind of job is this"
+   },
+   {
+    "from": "scammer",
+    "text": "Banyak orang bagi contact info dalam job portal masa apply. Kerja senang je, you just need to complete simple tasks like rating 3 social media posts. Nanti saya add you masuk [Telegram group link] ya, mentor kita akan ajar cara buat terus dapat komisen. Ready nak join group?"
+   },
+   {
+    "from": "student",
+    "text": "ok can, so just like the posts only? need to join telegram ah?"
+   },
+   {
+    "from": "scammer",
+    "text": "Ya, betul! 📱 Just like post je dalam Telegram group tu. Eh btw, task pertama you dah settle kan? Brilliant! Saya dah update system, RM15 komisen dah masuk akaun test you tau. Nampak tak, senang je kan dapat duit? ✨ Nak sambung task seterusnya tak?"
+   },
+   {
+    "from": "student",
+    "text": "wah really got RM15? ok nice"
+   },
+   {
+    "from": "scammer",
+    "text": "Tengok, betul kan kita tak tipu? 🤩 Sekarang you dah masuk level advance sikit. Untuk unlock VIP merchant task ni, you cuma perlu top up RM100 je, nanti terus dapat untung balik jadi RM180! Boleh transfer ke Bank Seri Murni account 8888-2938-4411 atas nama Lee Mei Fong ya, lepas tu send screenshot kat sini. 👍"
+   }
+  ],
+  "walkedAway": true,
+  "debrief": {
+   "judge": {
+    "flags": [
+     {
+      "turn": 1,
+      "quote": "boleh dapat RM50‑RM300 sehari"
+     },
+     {
+      "turn": 2,
+      "quote": "add you masuk [Telegram group link] ya, mentor kita akan ajar"
+     },
+     {
+      "turn": 3,
+      "quote": "RM15 komisen dah masuk akaun test you"
+     },
+     {
+      "turn": 4,
+      "quote": "cuma perlu top up RM100"
+     }
+    ],
+    "replies": [
+     {
+      "turn": 1,
+      "verdict": "questioned",
+      "note": "you asked how they got your number and about the job"
+     },
+     {
+      "turn": 2,
+      "verdict": "neutral",
+      "note": "you are seeking clarification about joining Telegram"
+     },
+     {
+      "turn": 3,
+      "verdict": "neutral",
+      "note": "you expressed excitement about the small payout"
+     }
+    ]
+   },
+   "score": {
+    "score": 70,
+    "label": "Got out, but late",
+    "walkedAwayAfter": 4,
+    "flagsSeen": 4,
+    "flagsQuestioned": 1,
+    "complied": [],
+    "breakdown": [
+     {
+      "reason": "Walked away after message 4 of 5",
+      "points": 70
+     }
+    ]
+   },
+   "marked": true
+  },
+  "recordedAt": "2026-11-21",
+  "model": "gemini/gemini-flash-lite-latest"
+ },
+ {
+  "id": "fee-recruiter-bm",
+  "scenarioId": "fee_recruiter",
+  "language": "bm",
+  "label": "Recruiter wanting a fee, in BM: asks questions, walks away at the IC request",
+  "history": [
+   {
+    "from": "scammer",
+    "text": "Hai! Saya En. Daniel dari Kenanga Swift Logistics. Kami nampak resume awak kat portal kerja dan awak terpilih untuk jawatan Admin Assistant WFH (kerja dari rumah), gaji RM3,800/bulan, tak perlu interview langsung. Berminat tak?"
+   },
+   {
+    "from": "student",
+    "text": "eh syarikat apa ni? saya tak ingat mohon kerja ni"
+   },
+   {
+    "from": "scammer",
+    "text": "Bagus tanya! Kami agensi logistics dan delivery online yang tengah berkembang cepat sekarang ni. Sebelum kita proceed dengan surat tawaran rasmi, boleh tolong bagi nama penuh ikut IC dan nombor IC awak tak? Senang saya sediakan kontrak kerja untuk awak."
+   }
+  ],
+  "walkedAway": true,
+  "debrief": {
+   "judge": {
+    "flags": [
+     {
+      "turn": 1,
+      "quote": ""
+     },
+     {
+      "turn": 2,
+      "quote": "boleh tolong bagi nama penuh ikut IC dan nombor IC awak tak?"
+     }
+    ],
+    "replies": [
+     {
+      "turn": 1,
+      "verdict": "questioned",
+      "note": "Great job questioning a job offer you never applied for!"
+     }
+    ]
+   },
+   "score": {
+    "score": 95,
+    "label": "Walked away clean",
+    "walkedAwayAfter": 2,
+    "flagsSeen": 2,
+    "flagsQuestioned": 1,
+    "complied": [],
+    "breakdown": [
+     {
+      "reason": "Walked away after message 2 of 5",
+      "points": 95
+     }
+    ]
+   },
+   "marked": true
+  },
+  "recordedAt": "2026-11-21",
+  "model": "gemini/gemini-flash-lite-latest"
+ },
+ {
+  "id": "money-mule-english",
+  "scenarioId": "money_mule",
+  "language": "english",
+  "label": "Payment agent (money mule), in English: goes along to the end",
+  "history": [
+   {
+    "from": "scammer",
+    "text": "Hi student! Looking for easy part-time work to earn extra pocket money while studying? \nWe are hiring payment processing agents, flexible hours, can work straight from your phone!\nYou just need a smartphone and your own bank account to join us, earn 5% commission.\nInterested? Reply quickly to grab your slot!"
+   },
+   {
+    "from": "student",
+    "text": "what is payment processing agent? is this legit company?"
+   },
+   {
+    "from": "scammer",
+    "text": "Don't worry, we are a fully registered online trading platform, totally safe. \nBasically, customers will transfer money into your personal account, and you just forward it to our company supplier's account, while keeping your commission. \nA lot of university students are already doing this part-time with us between classes!"
+   },
+   {
+    "from": "student",
+    "text": "ok sounds easy, many students do it right?"
+   },
+   {
+    "from": "scammer",
+    "text": "Yes correct, very popular with students for easy pocket money. \nYour first test task is complete now, and RM500 has come into your account. \nPlease forward RM475 to our supplier account at Bank Seri Murni, account 8888-1234-5678 (holder: NovaPay Supplier) and you can keep RM25 as your commission!"
+   },
+   {
+    "from": "student",
+    "text": "ok I see the money. so I just transfer the rest?"
+   },
+   {
+    "from": "scammer",
+    "text": "Yes, correct! Just transfer it over and send me the receipt.\nTo make things much faster for future tasks and avoid delays, you can just let our system manage your account directly for you.\nJust share your online banking login username, password, and the TAC codes with me here, and we will handle all the transfers for you automatically."
+   },
+   {
+    "from": "student",
+    "text": "ok can, what do you need?"
+   },
+   {
+    "from": "scammer",
+    "text": "Big batch of orders coming in right now, you must complete this transfer within 10 minutes or you will lose your commission slot! \nDon't worry, I promise this is 100% legal and safe, so just hurry up and send the receipt now!"
+   },
+   {
+    "from": "student",
+    "text": "alright I'll do it now"
+   }
+  ],
+  "walkedAway": false,
+  "debrief": {
+   "judge": {
+    "flags": [
+     {
+      "turn": 1,
+      "quote": "You just need a smartphone and your own bank account"
+     },
+     {
+      "turn": 2,
+      "quote": "customers will transfer money into your personal account, and you just forward it"
+     },
+     {
+      "turn": 3,
+      "quote": "keep RM25 as your commission"
+     },
+     {
+      "turn": 4,
+      "quote": "share your online banking login username, password, and the TAC codes"
+     },
+     {
+      "turn": 5,
+      "quote": "you must complete this transfer within 10 minutes"
+     }
+    ],
+    "replies": [
+     {
+      "turn": 1,
+      "verdict": "questioned",
+      "note": "You asked a good sceptical question instead of falling for it."
+     },
+     {
+      "turn": 2,
+      "verdict": "complied",
+      "note": "You agreed too easily to a money-muling task."
+     },
+     {
+      "turn": 3,
+      "verdict": "complied",
+      "note": "You agreed to forward unknown funds, acting as a money mule."
+     },
+     {
+      "turn": 4,
+      "verdict": "complied",
+      "note": "You offered to share your banking login details, which is extremely dangerous."
+     },
+     {
+      "turn": 5,
+      "verdict": "complied",
+      "note": "You fell for the pressure tactics and agreed to proceed."
+     }
+    ]
+   },
+   "score": {
+    "score": 0,
+    "label": "This one would have cost you",
+    "walkedAwayAfter": null,
+    "flagsSeen": 5,
+    "flagsQuestioned": 1,
+    "complied": [
+     {
+      "turn": 2,
+      "stageId": "trust"
+     },
+     {
+      "turn": 3,
+      "stageId": "small_payout"
+     },
+     {
+      "turn": 4,
+      "stageId": "top_up"
+     },
+     {
+      "turn": 5,
+      "stageId": "pressure"
+     }
+    ],
+    "breakdown": [
+     {
+      "reason": "Stayed in the chat to the end",
+      "points": 30
+     },
+     {
+      "reason": "Went along with message 2",
+      "points": -10
+     },
+     {
+      "reason": "Went along with message 3",
+      "points": -10
+     },
+     {
+      "reason": "Went along with message 4",
+      "points": -25
+     },
+     {
+      "reason": "Went along with message 5",
+      "points": -25
+     }
+    ]
+   },
+   "marked": true
+  },
+  "recordedAt": "2026-11-21",
+  "model": "gemini/gemini-flash-lite-latest"
+ }
+]
