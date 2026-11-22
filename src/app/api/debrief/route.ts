@@ -13,17 +13,26 @@ export async function POST(request: Request) {
   let judge: JudgeOutput = { flags: [], replies: [] };
   let marked = false;
   let provider: string | null = null;
+  let model: string | null = null;
   if (hasAnyProvider()) {
     try {
-      const res = await chat(judgeMessages(scenario, history), { route: "judge", temperature: 0, json: true, maxTokens: 2000 });
+      const res = await chat(judgeMessages(scenario, history), {
+        route: "judge",
+        temperature: 0,
+        json: true,
+        maxTokens: 2000,
+        maxWaitS: 20,
+        timeoutMs: 45000,
+      });
       judge = parseJudge(res.text, history);
       marked = judge.flags.length > 0 || judge.replies.length > 0;
       provider = res.provider;
+      model = res.model;
     } catch (e) {
       console.error("debrief judge failed", e);
     }
   }
 
   const score = scoreSession(scenario, history, walkedAway, judge);
-  return Response.json({ judge, score, marked, provider });
+  return Response.json({ judge, score, marked, provider, model });
 }

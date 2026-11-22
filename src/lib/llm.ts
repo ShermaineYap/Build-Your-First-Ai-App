@@ -1,6 +1,6 @@
 // One OpenAI-compatible client for all providers.
 // Free tiers are tight (Groq: 8,000 tokens/minute per model), so load is spread across models:
-// chat turns try the big Groq model first; marking tries the small one first. Gemini is the last resort.
+// both chat turns and marking try the big Groq model first, then the small one, then Gemini.
 
 export interface ChatMessage {
   role: "system" | "user" | "assistant";
@@ -26,14 +26,14 @@ function providers(route: Route): Provider[] {
     base: GROQ,
     model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
     key: process.env.GROQ_API_KEY,
-    extra: { reasoning_effort: "low" },
+    extra: { reasoning_effort: route === "judge" ? "medium" : "low" },
   };
   const groqSmall: Provider = {
     name: "groq",
     base: GROQ,
     model: process.env.GROQ_MODEL_SMALL || "openai/gpt-oss-20b",
     key: process.env.GROQ_API_KEY,
-    extra: { reasoning_effort: "low" },
+    extra: { reasoning_effort: route === "judge" ? "medium" : "low" },
   };
   const gemini: Provider = {
     name: "gemini",
@@ -41,7 +41,10 @@ function providers(route: Route): Provider[] {
     model: process.env.GEMINI_MODEL || "gemini-flash-lite-latest",
     key: process.env.GEMINI_API_KEY,
   };
-  const order = route === "judge" ? [groqSmall, groqBig, gemini] : [groqBig, groqSmall, gemini];
+  // Marking quality matters most, so both routes start on the big model; the small one absorbs overflow.
+  // (Tested 22 Nov: gpt-oss-20b marked clear "going along" replies as sceptical questions.)
+  // Both routes share one order; marking gets more reasoning effort (low effort under-marked going along).
+  const order = [groqBig, groqSmall, gemini];
   return order.filter((p) => p.key);
 }
 
@@ -124,14 +127,21 @@ async function callOnce(
   }
 }
 
-const MAX_WAIT_S = 6;
 
-/** Try each provider in order. A short rate-limit wait is retried once on the same model; otherwise move on. */
+/** Try each provider in order. A rate-limit wait up to maxWaitS is retried once on the same model; otherwise move on. */
 export async function chat(
   messages: ChatMessage[],
-  opts: { route?: Route; temperature?: number; maxTokens?: number; json?: boolean; timeoutMs?: number } = {},
+  opts: {
+    route?: Route;
+    temperature?: number;
+    maxTokens?: number;
+    json?: boolean;
+    timeoutMs?: number;
+    maxWaitS?: number;
+  } = {},
 ): Promise<ChatResult> {
   const o = { temperature: opts.temperature ?? 0.8, maxTokens: opts.maxTokens ?? 700, json: opts.json ?? false };
+  const maxWait = opts.maxWaitS ?? 6;
   const errors: string[] = [];
   for (const p of providers(opts.route ?? "chat")) {
     for (let attempt = 0; attempt < 2; attempt++) {
@@ -139,7 +149,7 @@ export async function chat(
         return await callOnce(p, messages, o, opts.timeoutMs ?? 20000);
       } catch (e) {
         errors.push(e instanceof Error ? e.message : String(e));
-        if (e instanceof RateLimited && attempt === 0 && e.retryAfterS <= MAX_WAIT_S) {
+        if (e instanceof RateLimited && attempt === 0 && e.retryAfterS <= maxWait) {
           await new Promise((r) => setTimeout(r, Math.ceil(e.retryAfterS * 1000) + 250));
           continue;
         }

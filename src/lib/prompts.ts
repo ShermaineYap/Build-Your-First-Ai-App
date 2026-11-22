@@ -60,7 +60,7 @@ Return ONLY JSON in this shape:
 flags: one entry per recruiter message. "quote" is the SHORTEST exact span (3-15 words) copied character-for-character from that recruiter message that shows its red flag. If none fits, use "".
 replies: one entry per student reply. "turn" is the number of the recruiter message the student was replying to. "verdict" is one of:
 - "refused": clearly says no, stops, or won't do what was asked
-- "questioned": asks a sceptical question or points out something suspicious, without agreeing
+- "questioned": asks a sceptical question or points out something suspicious, without agreeing. Only questions that show doubt count
 - "complied": agrees to, does, or says they will do what the scammer asked (pay, share details, join, forward money)
 - "neutral": small talk or curiosity without agreeing or doubting
 "note" is a short plain-English comment (max 15 words) to the student, written as "you".`;

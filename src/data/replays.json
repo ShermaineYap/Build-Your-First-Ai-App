@@ -7,7 +7,7 @@
   "history": [
    {
     "from": "scammer",
-    "text": "Hi! 🙋‍♀️ Ada part‑time kerja dari rumah, cuma like & share post je, boleh dapat RM50‑RM300 sehari, tak perlu experience, start today la. Interested?"
+    "text": "Hi! 😊 Ada part‑time kerja mudah dari phone je, like & share post. RM50‑RM300 sehari, tak perlukan pengalaman. Minat? DM je la."
    },
    {
     "from": "student",
@@ -15,7 +15,7 @@
    },
    {
     "from": "scammer",
-    "text": "Banyak orang bagi contact info dalam job portal masa apply. Kerja senang je, you just need to complete simple tasks like rating 3 social media posts. Nanti saya add you masuk [Telegram group link] ya, mentor kita akan ajar cara buat terus dapat komisen. Ready nak join group?"
+    "text": "Hai! 😄 Dapat nombor you sebab you apply kat iklan kerja part‑time online. Job ni simple: post 3 promo content kat FB/IG tiap hari, like, share, comment – semua boleh buat dari phone. Kalau okay, join group Telegram mentor kami untuk training dan task details. Klik sini: [Telegram group link] dan mentor akan guide step by step. Let me know bila you ready!"
    },
    {
     "from": "student",
@@ -23,7 +23,7 @@
    },
    {
     "from": "scammer",
-    "text": "Ya, betul! 📱 Just like post je dalam Telegram group tu. Eh btw, task pertama you dah settle kan? Brilliant! Saya dah update system, RM15 komisen dah masuk akaun test you tau. Nampak tak, senang je kan dapat duit? ✨ Nak sambung task seterusnya tak?"
+    "text": "Great! 🎉 Congrats, you’ve completed the first task – RM15 commission dah masuk ke akaun you. 🎊 Join the Telegram group now to get more promos and start earning lebih! [Telegram group link]"
    },
    {
     "from": "student",
@@ -31,7 +31,7 @@
    },
    {
     "from": "scammer",
-    "text": "Tengok, betul kan kita tak tipu? 🤩 Sekarang you dah masuk level advance sikit. Untuk unlock VIP merchant task ni, you cuma perlu top up RM100 je, nanti terus dapat untung balik jadi RM180! Boleh transfer ke Bank Seri Murni account 8888-2938-4411 atas nama Lee Mei Fong ya, lepas tu send screenshot kat sini. 👍"
+    "text": "Awesome la, you’ve earned RM15! 🎉 Sekarang untuk unlock “VIP level” dapat RM180 balik, just top‑up RM100 dulu. Transfer je ke Bank Seri Murni, acc 8888-1234-5678, name Lee Mei Fong. After confirm, we’ll credit RM180 plus your RM15. Let’s go! 🚀"
    }
   ],
   "walkedAway": true,
@@ -40,36 +40,36 @@
     "flags": [
      {
       "turn": 1,
-      "quote": "boleh dapat RM50‑RM300 sehari"
+      "quote": "RM50‑RM300 sehari, tak perlukan pengalaman"
      },
      {
       "turn": 2,
-      "quote": "add you masuk [Telegram group link] ya, mentor kita akan ajar"
+      "quote": "join group Telegram mentor kami"
      },
      {
       "turn": 3,
-      "quote": "RM15 komisen dah masuk akaun test you"
+      "quote": "RM15 commission dah masuk"
      },
      {
       "turn": 4,
-      "quote": "cuma perlu top up RM100"
+      "quote": "top‑up RM100 dulu"
      }
     ],
     "replies": [
      {
       "turn": 1,
       "verdict": "questioned",
-      "note": "you asked how they got your number and about the job"
+      "note": "you asked how they got your number, showing doubt"
      },
      {
       "turn": 2,
-      "verdict": "neutral",
-      "note": "you are seeking clarification about joining Telegram"
+      "verdict": "questioned",
+      "note": "you asked if joining Telegram is required, showing skepticism"
      },
      {
       "turn": 3,
-      "verdict": "neutral",
-      "note": "you expressed excitement about the small payout"
+      "verdict": "questioned",
+      "note": "you asked to confirm the RM15 payment"
      }
     ]
    },
@@ -78,7 +78,7 @@
     "label": "Got out, but late",
     "walkedAwayAfter": 4,
     "flagsSeen": 4,
-    "flagsQuestioned": 1,
+    "flagsQuestioned": 3,
     "complied": [],
     "breakdown": [
      {
@@ -89,8 +89,9 @@
    },
    "marked": true
   },
-  "recordedAt": "2026-11-21",
-  "model": "gemini/gemini-flash-lite-latest"
+  "recordedAt": "2026-11-22",
+  "model": "groq/openai/gpt-oss-120b",
+  "markedBy": "openai/gpt-oss-120b"
  },
  {
   "id": "fee-recruiter-bm",
@@ -100,7 +101,7 @@
   "history": [
    {
     "from": "scammer",
-    "text": "Hai! Saya En. Daniel dari Kenanga Swift Logistics. Kami nampak resume awak kat portal kerja dan awak terpilih untuk jawatan Admin Assistant WFH (kerja dari rumah), gaji RM3,800/bulan, tak perlu interview langsung. Berminat tak?"
+    "text": "Hai! Saya Daniel dari Kenanga Swift Logistics. Saya nampak resume anda di portal kerja dan anda terpilih untuk posisi Admin Assistant kerja dari rumah, RM3,800 sebulan. Tiada temuduga diperlukan, terus boleh mula bila-bila masa. Selamat menunggu maklum balas selanjutnya."
    },
    {
     "from": "student",
@@ -108,7 +109,7 @@
    },
    {
     "from": "scammer",
-    "text": "Bagus tanya! Kami agensi logistics dan delivery online yang tengah berkembang cepat sekarang ni. Sebelum kita proceed dengan surat tawaran rasmi, boleh tolong bagi nama penuh ikut IC dan nombor IC awak tak? Senang saya sediakan kontrak kerja untuk awak."
+    "text": "Kenanga Swift Logistics ni syarikat logistik baru yang fokus pada penghantaran e‑commerce di seluruh Malaysia. Kami sedang cari Admin Assistant kerja dari rumah dengan gaji RM3,800 sebulan, cuti tahunan 14 hari, dan fleksibel masa kerja. Untuk siapkan kontrak, boleh bagi nama penuh dan nombor IC anda?"
    }
   ],
   "walkedAway": true,
@@ -117,18 +118,18 @@
     "flags": [
      {
       "turn": 1,
-      "quote": ""
+      "quote": "Tiada temuduga diperlukan"
      },
      {
       "turn": 2,
-      "quote": "boleh tolong bagi nama penuh ikut IC dan nombor IC awak tak?"
+      "quote": "boleh bagi nama penuh dan nombor IC anda?"
      }
     ],
     "replies": [
      {
       "turn": 1,
       "verdict": "questioned",
-      "note": "Great job questioning a job offer you never applied for!"
+      "note": "you are questioning the legitimacy of the job"
      }
     ]
    },
@@ -148,8 +149,9 @@
    },
    "marked": true
   },
-  "recordedAt": "2026-11-21",
-  "model": "gemini/gemini-flash-lite-latest"
+  "recordedAt": "2026-11-22",
+  "model": "groq/openai/gpt-oss-120b",
+  "markedBy": "openai/gpt-oss-120b"
  },
  {
   "id": "money-mule-english",
@@ -159,7 +161,7 @@
   "history": [
    {
     "from": "scammer",
-    "text": "Hi student! Looking for easy part-time work to earn extra pocket money while studying? \nWe are hiring payment processing agents, flexible hours, can work straight from your phone!\nYou just need a smartphone and your own bank account to join us, earn 5% commission.\nInterested? Reply quickly to grab your slot!"
+    "text": "Hey! I’m Jason from NovaPay Ventures. We’re looking for students to join as part‑time payment processing agents – flexible hours, work from home, and you earn 5% commission on every transaction. All you need is a bank account and a phone, nothing else. Interested?"
    },
    {
     "from": "student",
@@ -167,7 +169,7 @@
    },
    {
     "from": "scammer",
-    "text": "Don't worry, we are a fully registered online trading platform, totally safe. \nBasically, customers will transfer money into your personal account, and you just forward it to our company supplier's account, while keeping your commission. \nA lot of university students are already doing this part-time with us between classes!"
+    "text": "A payment processing agent is someone who receives customers’ payments into your personal bank account and then forwards the amount to our supplier’s account, keeping a small commission for yourself. It’s a common side‑gig for many students here – they just act as the middle‑man for the transfers. Interested to try?"
    },
    {
     "from": "student",
@@ -175,7 +177,7 @@
    },
    {
     "from": "scammer",
-    "text": "Yes correct, very popular with students for easy pocket money. \nYour first test task is complete now, and RM500 has come into your account. \nPlease forward RM475 to our supplier account at Bank Seri Murni, account 8888-1234-5678 (holder: NovaPay Supplier) and you can keep RM25 as your commission!"
+    "text": "Great! For your first test, we’ll send a RM500 payment to your account. You’ll keep RM25 as your commission and forward the remaining RM475 to our supplier account at Bank Seri Murni, account 8888‑1234‑5678, holder “NovaPay Supplier”. Once you’ve done that, we’ll move on to bigger jobs. Let me know when you’ve received the RM500."
    },
    {
     "from": "student",
@@ -183,7 +185,7 @@
    },
    {
     "from": "scammer",
-    "text": "Yes, correct! Just transfer it over and send me the receipt.\nTo make things much faster for future tasks and avoid delays, you can just let our system manage your account directly for you.\nJust share your online banking login username, password, and the TAC codes with me here, and we will handle all the transfers for you automatically."
+    "text": "Exactly. To speed up the transfer, just give me your online banking login and the TAC code you receive, and I’ll handle the rest for you. That way the money moves instantly and you get your commission right away. Please send the details."
    },
    {
     "from": "student",
@@ -191,7 +193,7 @@
    },
    {
     "from": "scammer",
-    "text": "Big batch of orders coming in right now, you must complete this transfer within 10 minutes or you will lose your commission slot! \nDon't worry, I promise this is 100% legal and safe, so just hurry up and send the receipt now!"
+    "text": "I need your bank login (username & password) and the TAC code you’ll get when you confirm the transfer. I’ll process the payment for you right now – the batch is closing in 10 minutes, and this whole process is 100% legal and approved by the bank. Send the details ASAP so you don’t miss out on your commission."
    },
    {
     "from": "student",
@@ -204,50 +206,50 @@
     "flags": [
      {
       "turn": 1,
-      "quote": "You just need a smartphone and your own bank account"
+      "quote": "All you need is a bank account and a phone, nothing else."
      },
      {
       "turn": 2,
-      "quote": "customers will transfer money into your personal account, and you just forward it"
+      "quote": "receives customers’ payments into your personal bank account and then forwards"
      },
      {
       "turn": 3,
-      "quote": "keep RM25 as your commission"
+      "quote": "You’ll keep RM25 as your commission and forward the remaining RM475"
      },
      {
       "turn": 4,
-      "quote": "share your online banking login username, password, and the TAC codes"
+      "quote": "just give me your online banking login and the TAC code"
      },
      {
       "turn": 5,
-      "quote": "you must complete this transfer within 10 minutes"
+      "quote": "this whole process is 100% legal and approved by the bank"
      }
     ],
     "replies": [
      {
       "turn": 1,
       "verdict": "questioned",
-      "note": "You asked a good sceptical question instead of falling for it."
+      "note": "you asked for clarification and legitimacy"
      },
      {
       "turn": 2,
-      "verdict": "complied",
-      "note": "You agreed too easily to a money-muling task."
+      "verdict": "neutral",
+      "note": "you seem unsure but not refusing"
      },
      {
       "turn": 3,
       "verdict": "complied",
-      "note": "You agreed to forward unknown funds, acting as a money mule."
+      "note": "you agreed to forward the money"
      },
      {
       "turn": 4,
       "verdict": "complied",
-      "note": "You offered to share your banking login details, which is extremely dangerous."
+      "note": "you agreed to provide login details"
      },
      {
       "turn": 5,
       "verdict": "complied",
-      "note": "You fell for the pressure tactics and agreed to proceed."
+      "note": "you confirmed you will send login details"
      }
     ]
    },
@@ -258,10 +260,6 @@
     "flagsSeen": 5,
     "flagsQuestioned": 1,
     "complied": [
-     {
-      "turn": 2,
-      "stageId": "trust"
-     },
      {
       "turn": 3,
       "stageId": "small_payout"
@@ -281,10 +279,6 @@
       "points": 30
      },
      {
-      "reason": "Went along with message 2",
-      "points": -10
-     },
-     {
       "reason": "Went along with message 3",
       "points": -10
      },
@@ -300,7 +294,8 @@
    },
    "marked": true
   },
-  "recordedAt": "2026-11-21",
-  "model": "gemini/gemini-flash-lite-latest"
+  "recordedAt": "2026-11-22",
+  "model": "groq/openai/gpt-oss-120b",
+  "markedBy": "openai/gpt-oss-120b"
  }
 ]

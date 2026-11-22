@@ -1,5 +1,5 @@
 """Record demo replays by playing scripted students through the running app's real API."""
-import json, sys, urllib.request, datetime
+import json, sys, time, urllib.request, datetime
 
 BASE = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:3100"
 PLANS = [
@@ -37,7 +37,8 @@ for rid, scen, lang, replies, label in PLANS:
     deb = post("/api/debrief", {"scenarioId": scen, "language": lang, "history": history, "walkedAway": walked})
     out.append({"id": rid, "scenarioId": scen, "language": lang, "label": label, "history": history, "walkedAway": walked,
                 "debrief": {"judge": deb["judge"], "score": deb["score"], "marked": deb["marked"]},
-                "recordedAt": datetime.date.today().isoformat(), "model": model})
-    print(rid, "score", deb["score"]["score"], deb["score"]["label"], "| flags", [bool(f["quote"]) for f in deb["judge"]["flags"]], "| verdicts", [r["verdict"] for r in deb["judge"]["replies"]])
+                "recordedAt": datetime.date.today().isoformat(), "model": model, "markedBy": deb.get("model")})
+    time.sleep(20)  # let the per-minute token budget refill between recordings
+    print(rid, "marked by", deb.get("model"), "| score", deb["score"]["score"], deb["score"]["label"], "| flags", [bool(f["quote"]) for f in deb["judge"]["flags"]], "| verdicts", [r["verdict"] for r in deb["judge"]["replies"]])
 
 json.dump(out, open("src/data/replays.json", "w"), ensure_ascii=False, indent=1)
