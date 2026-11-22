@@ -148,3 +148,30 @@ describe("locateQuote", () => {
     expect(locateQuote(msg, "not here")).toBe("");
   });
 });
+
+import { SET_A, SET_B, resultCode, parseResultCode, scoreQuiz } from "@/lib/quiz";
+
+describe("study quiz", () => {
+  it("has two matched sets of 5 scams and 3 legit", () => {
+    for (const set of [SET_A, SET_B]) {
+      expect(set).toHaveLength(8);
+      expect(set.filter((i) => i.scam)).toHaveLength(5);
+    }
+    const ids = [...SET_A, ...SET_B].map((i) => i.id);
+    expect(new Set(ids).size).toBe(16);
+  });
+  it("uses no real banks, brands or links", () => {
+    for (const i of [...SET_A, ...SET_B]) expect(findOutputProblems(i.text).filter((p) => p !== "meta")).toEqual([]);
+  });
+  it("scores answers", () => {
+    const all = Object.fromEntries(SET_A.map((i) => [i.id, i.scam]));
+    expect(scoreQuiz(SET_A, all)).toBe(8);
+    expect(scoreQuiz(SET_A, {})).toBe(0);
+  });
+  it("makes codes that parse back", () => {
+    const code = resultCode("BA", 5, 7, () => 0);
+    expect(code).toBe("SS-BA-5-7-AAA");
+    expect(parseResultCode(code.toLowerCase())).toEqual({ order: "BA", before: 5, after: 7 });
+    expect(parseResultCode("SS-AB-9-1-XYZ")).toBeNull();
+  });
+});
