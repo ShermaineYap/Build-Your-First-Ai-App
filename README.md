@@ -29,8 +29,10 @@ ScamSparring is a safe practice chat for Malaysian university students. An AI pl
 
 | Part | Model / API | Notes |
 |---|---|---|
-| Scammer messages | `openai/gpt-oss-120b` on Groq (free tier) | Fallback: `gemini-flash-lite-latest` via Gemini's OpenAI-compatible API |
-| Debrief marking | Same providers, JSON mode, temperature 0 | Output validated and quotes checked against the original text |
+| Scammer messages | `openai/gpt-oss-120b` on Groq (free tier), low reasoning effort | Fallbacks in order: `openai/gpt-oss-20b` on Groq, then `gemini-flash-lite-latest` via Gemini's OpenAI-compatible API |
+| Debrief marking | `openai/gpt-oss-20b` first, then the same fallbacks; JSON mode, temperature 0 | Output validated; quotes checked against the original text |
+
+Groq's free tier allows 8,000 tokens per minute *per model*, so chat turns and marking start on different models, and a short rate-limit wait is retried once before falling back.
 
 Prompts are in `src/lib/prompts.ts`, scenarios in `src/lib/scenarios.ts`, scoring in `src/lib/score.ts`.
 

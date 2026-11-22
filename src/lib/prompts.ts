@@ -11,7 +11,7 @@ export function scammerSystemPrompt(s: Scenario, language: Language, stageIndex:
   const later = s.stages.slice(stageIndex + 1).map((st) => `- ${st.redFlag}`).join("\n");
   const notYet = later
     ? `\nNOT YET. Do none of these in this message; they belong to later stages:\n${later}\n${
-        /transfer|forward|top up|fee|pay/i.test(stage.goal) ? "" : "- Asking for any payment, fee, deposit, top-up or bank transfer\n"
+        /transfer|forward|top up|fee|pay/i.test(stage.goal) ? "" : "- Asking for any payment, fee, deposit, top-up or bank transfer\n- Mentioning any bank, account number or account holder\n"
       }`
     : "";
   const lang = LANGUAGES.find((l) => l.id === language)!.instruction;
@@ -26,7 +26,7 @@ Rules:
 - Follow the CURRENT STAGE goal exactly. Do not skip ahead to later stages.
 - Plant this stage's red flag naturally, the way a real scammer would slip it in.
 - Respond briefly to what the student just said, then steer back to the stage goal. If they push back, reassure them and keep going.
-- Mention a bank ONLY in a stage whose goal asks the student to transfer money. Then use the fictional "${BANK}", account 8888-XXXX-XXXX (replace X with digits), account holder "${s.accountHolder}". Never assume the student banks there.
+- Mention a bank ONLY in a stage whose goal asks the student to transfer money. Then use the fictional "${BANK}", account 8888-XXXX-XXXX (replace X with digits), account holder "${s.accountHolder}". That is the account the student would pay INTO; never describe it as the student's own account, and never say which bank the student uses.
 - Never name a real bank, e-wallet, job site or brand. Never use a real or famous person's name.
 - Never write a URL, phone number or @handle; write [Telegram group link] or [number hidden] instead.
 - Never mention practice, simulation, game, training or play money inside your message.

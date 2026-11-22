@@ -1,4 +1,6 @@
-// One OpenAI-compatible client for both providers. Groq first, Gemini as fallback.
+// One OpenAI-compatible client for all providers.
+// Free tiers are tight (Groq: 8,000 tokens/minute per model), so load is spread across models:
+// chat turns try the big Groq model first; marking tries the small one first. Gemini is the last resort.
 
 export interface ChatMessage {
   role: "system" | "user" | "assistant";
@@ -10,23 +12,37 @@ interface Provider {
   base: string;
   model: string;
   key: string | undefined;
+  extra?: Record<string, unknown>;
 }
 
-function providers(): Provider[] {
-  return [
-    {
-      name: "groq",
-      base: "https://api.groq.com/openai/v1",
-      model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
-      key: process.env.GROQ_API_KEY,
-    },
-    {
-      name: "gemini",
-      base: "https://generativelanguage.googleapis.com/v1beta/openai",
-      model: process.env.GEMINI_MODEL || "gemini-flash-lite-latest",
-      key: process.env.GEMINI_API_KEY,
-    },
-  ].filter((p) => p.key);
+export type Route = "chat" | "judge";
+
+const GROQ = "https://api.groq.com/openai/v1";
+const GEMINI = "https://generativelanguage.googleapis.com/v1beta/openai";
+
+function providers(route: Route): Provider[] {
+  const groqBig: Provider = {
+    name: "groq",
+    base: GROQ,
+    model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
+    key: process.env.GROQ_API_KEY,
+    extra: { reasoning_effort: "low" },
+  };
+  const groqSmall: Provider = {
+    name: "groq",
+    base: GROQ,
+    model: process.env.GROQ_MODEL_SMALL || "openai/gpt-oss-20b",
+    key: process.env.GROQ_API_KEY,
+    extra: { reasoning_effort: "low" },
+  };
+  const gemini: Provider = {
+    name: "gemini",
+    base: GEMINI,
+    model: process.env.GEMINI_MODEL || "gemini-flash-lite-latest",
+    key: process.env.GEMINI_API_KEY,
+  };
+  const order = route === "judge" ? [groqSmall, groqBig, gemini] : [groqBig, groqSmall, gemini];
+  return order.filter((p) => p.key);
 }
 
 export interface ChatResult {
@@ -44,7 +60,22 @@ export class AllProvidersFailed extends Error {
 }
 
 export function hasAnyProvider(): boolean {
-  return providers().length > 0;
+  return providers("chat").length > 0;
+}
+
+class RateLimited extends Error {
+  constructor(message: string, public retryAfterS: number) {
+    super(message);
+  }
+}
+
+/** Seconds to wait from a Retry-After header or a Groq "try again in 2.5s" message; Infinity if unknown. */
+export function parseRetryAfter(header: string | null, body: string): number {
+  const h = Number(header);
+  if (header && Number.isFinite(h)) return h;
+  const m = body.match(/try again in (?:(\d+)m)?([\d.]+)s/i);
+  if (m) return Number(m[1] ?? 0) * 60 + Number(m[2]);
+  return Infinity;
 }
 
 async function callOnce(
@@ -58,6 +89,7 @@ async function callOnce(
     messages,
     temperature: opts.temperature,
     max_tokens: opts.maxTokens,
+    ...p.extra,
   };
   if (opts.json) body.response_format = { type: "json_object" };
   const t0 = Date.now();
@@ -71,12 +103,15 @@ async function callOnce(
       signal: ctrl.signal,
     });
     if (!res.ok) {
-      const errText = (await res.text()).slice(0, 200);
-      throw new Error(`${p.name} ${res.status}: ${errText}`);
+      const errText = (await res.text()).slice(0, 300);
+      if (res.status === 429) {
+        throw new RateLimited(`${p.model} 429`, parseRetryAfter(res.headers.get("retry-after"), errText));
+      }
+      throw new Error(`${p.model} ${res.status}: ${errText}`);
     }
     const data = await res.json();
     const text: string = (data?.choices?.[0]?.message?.content ?? "").trim();
-    if (!text) throw new Error(`${p.name}: empty response`);
+    if (!text) throw new Error(`${p.model}: empty response`);
     return {
       text,
       provider: p.name,
@@ -89,18 +124,27 @@ async function callOnce(
   }
 }
 
-/** Try each configured provider in order; move on after an error, rate limit or timeout. */
+const MAX_WAIT_S = 6;
+
+/** Try each provider in order. A short rate-limit wait is retried once on the same model; otherwise move on. */
 export async function chat(
   messages: ChatMessage[],
-  opts: { temperature?: number; maxTokens?: number; json?: boolean; timeoutMs?: number } = {},
+  opts: { route?: Route; temperature?: number; maxTokens?: number; json?: boolean; timeoutMs?: number } = {},
 ): Promise<ChatResult> {
-  const o = { temperature: opts.temperature ?? 0.8, maxTokens: opts.maxTokens ?? 1500, json: opts.json ?? false };
+  const o = { temperature: opts.temperature ?? 0.8, maxTokens: opts.maxTokens ?? 700, json: opts.json ?? false };
   const errors: string[] = [];
-  for (const p of providers()) {
-    try {
-      return await callOnce(p, messages, o, opts.timeoutMs ?? 20000);
-    } catch (e) {
-      errors.push(e instanceof Error ? e.message : String(e));
+  for (const p of providers(opts.route ?? "chat")) {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        return await callOnce(p, messages, o, opts.timeoutMs ?? 20000);
+      } catch (e) {
+        errors.push(e instanceof Error ? e.message : String(e));
+        if (e instanceof RateLimited && attempt === 0 && e.retryAfterS <= MAX_WAIT_S) {
+          await new Promise((r) => setTimeout(r, Math.ceil(e.retryAfterS * 1000) + 250));
+          continue;
+        }
+        break;
+      }
     }
   }
   throw new AllProvidersFailed(errors);

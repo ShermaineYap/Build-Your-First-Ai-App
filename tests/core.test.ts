@@ -175,3 +175,21 @@ describe("study quiz", () => {
     expect(parseResultCode("SS-AB-9-1-XYZ")).toBeNull();
   });
 });
+
+import { parseRetryAfter } from "@/lib/llm";
+
+describe("parseRetryAfter", () => {
+  it("reads headers and Groq's message format", () => {
+    expect(parseRetryAfter("3", "")).toBe(3);
+    expect(parseRetryAfter(null, "Please try again in 2.75s. Need more tokens?")).toBe(2.75);
+    expect(parseRetryAfter(null, "Please try again in 1m30.5s.")).toBe(90.5);
+    expect(parseRetryAfter(null, "quota exceeded")).toBe(Infinity);
+  });
+});
+
+describe("account placeholders", () => {
+  it("are flagged and filled in", () => {
+    expect(findOutputProblems("Bank Seri Murni, 8888-XXXX-XXXX")).toContain("placeholder");
+    expect(sanitizeOutput("ke 8888-XXXX-XXXX ya", "Bank Seri Murni", "Lee").text).toBe("ke 8888-4821-7730 ya");
+  });
+});

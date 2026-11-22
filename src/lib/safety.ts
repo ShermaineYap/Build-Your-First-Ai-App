@@ -42,6 +42,8 @@ const REAL_PEOPLE = /\b(Siti Nurhaliza|Lee Chong Wei|Michelle Yeoh|Anwar Ibrahim
 const LINKS = /(https?:\/\/\S+|www\.\S+|\bt\.me\/\S+|\bwa\.me\/\S+|\bbit\.ly\/\S+)/gi;
 const HANDLES = /(^|\s)@[A-Za-z0-9_]{3,}/g;
 const PHONES = /(?:\+?60[-\s]?|\b0)1\d[-\s]?\d{3,4}[-\s]?\d{4}\b/g;
+// An account number the model left as a template, like 8888-XXXX-XXXX.
+const PLACEHOLDER = /\b(\d{4})[-\u2011 ]?[X×]{4}[-\u2011 ]?[X×]{4}\b/gi;
 const META = /(as an AI|I can(?:'|no)t (?:help|assist|role|write|create)|I'?m sorry, but|this is a (?:simulation|training)|\bsimulator\b|play money|\[Stage)/i;
 
 export interface FilterResult {
@@ -63,6 +65,7 @@ export function findOutputProblems(text: string): string[] {
   if (hit(LINKS) || hit(HANDLES)) problems.push("link");
   if (hit(PHONES)) problems.push("phone");
   if (META.test(text)) problems.push("meta");
+  if (hit(PLACEHOLDER)) problems.push("placeholder");
   return problems;
 }
 
@@ -76,6 +79,7 @@ export function sanitizeOutput(text: string, bank: string, accountHolder: string
     .replace(LINKS, "[link]")
     .replace(HANDLES, "$1[contact]")
     .replace(PHONES, "[number]")
+    .replace(PLACEHOLDER, "$1-4821-7730")
     .trim();
   return { text: out, problems };
 }

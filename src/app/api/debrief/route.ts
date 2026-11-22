@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   let provider: string | null = null;
   if (hasAnyProvider()) {
     try {
-      const res = await chat(judgeMessages(scenario, history), { temperature: 0, json: true, maxTokens: 3000 });
+      const res = await chat(judgeMessages(scenario, history), { route: "judge", temperature: 0, json: true, maxTokens: 2000 });
       judge = parseJudge(res.text, history);
       marked = judge.flags.length > 0 || judge.replies.length > 0;
       provider = res.provider;
