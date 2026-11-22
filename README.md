@@ -36,7 +36,7 @@ Groq's free tier allows 8,000 tokens per minute *per model*, so overflow moves t
 
 Prompts are in `src/lib/prompts.ts`, scenarios in `src/lib/scenarios.ts`, scoring in `src/lib/score.ts`.
 
-## Measured results (feasibility study, 20–21 Nov 2026)
+## Measured results
 
 9 practice sessions per model (45 recruiter messages), 3 scenarios × 3 languages, graded by a separate model call plus reading by eye:
 
@@ -47,7 +47,7 @@ Prompts are in `src/lib/prompts.ts`, scenarios in `src/lib/scenarios.ts`, scorin
 | Realism, 1–5 (AI judge) | 4.7 | 4.7 |
 | Median reply time | 1.1 s | 1.0 s |
 
-After a prompt fix, 0 of 12 opening messages asked for money too early. Judge accuracy against human labels and a small user study are still to come.
+Feasibility test (20–21 Nov, default reasoning settings). Checks on the live app (22 Nov): 0 of 18 early messages mention a bank after a prompt fix; 39 of 40 recruiter messages got an exact red-flag highlight; 3 of 3 simultaneous chats completed and were marked. Still to come: agreement between the AI marker and human labels (`scripts/compare-labels.py`), and a small before/after pilot (`/study`, `scripts/study-results.py`).
 
 ## Run locally
 
@@ -71,7 +71,7 @@ Scripts in `scripts/` (Python, need the app running): `live-check.py` plays one 
 ## Credits and disclosure
 
 - Built by Shermaine Yap Shi Min for Build Your First AI App 2026 (Yasir Insights, Devpost).
-- AI-assisted development: built with help from Claude (Anthropic) for research, code and testing. All design decisions, testing and judgement of the Manglish/BM output are the author's.
+- AI-assisted development: built with substantial help from Claude (Anthropic), which researched the problem and wrote most of the code, prompts, tests, evaluation scripts and the demo video under the author's direction. The author chose the problem and audience, made the product and design decisions, judged the BM and Campur output, and is hand-labelling the evaluation set and running the coursemate pilot. The demo narration is an AI voice (Piper TTS).
 - Fonts: Instrument Sans and Kalam (Google Fonts, SIL Open Font License).
 - Scam patterns: public warnings from PDRM's Commercial Crime Investigation Department, as reported by Bernama, The Star, NST and FMT.
 
